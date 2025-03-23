@@ -5,8 +5,16 @@ import lombok.*;
 
 import java.util.List;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import jakarta.persistence.*;
+import java.util.List;
+
 @Entity
-@Table(name="t_orders")
+@Table(name = "t_orders")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -18,6 +26,4 @@ public class Order {
     private String orderNumber;
     @OneToMany(cascade = CascadeType.ALL)
     private List<OrderLineItems> orderLineItemsList;
-
-
 }

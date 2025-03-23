@@ -13,31 +13,32 @@ import org.springframework.web.bind.annotation.*;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/api/order")
+@RequiredArgsConstructor
 @Slf4j
 public class OrderController {
 
     private final OrderService orderService;
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-//    @CircuitBreaker(name="inventory", fallbackMethod = "fallbackMethod")
+//    @PostMapping
+//    @ResponseStatus(HttpStatus.CREATED)
+//    @CircuitBreaker(name = "inventory", fallbackMethod = "fallbackMethod")
 //    @TimeLimiter(name = "inventory")
 //    @Retry(name = "inventory")
-//    public CompletableFuture<String> placeOrder(@RequestBody OrderRequest orderRequest){
+//    public CompletableFuture<String> placeOrder(@RequestBody OrderRequest orderRequest) {
 //        log.info("Placing Order");
-//        return CompletableFuture.supplyAsync(()->orderService.placeOrder(orderRequest));
+//        return CompletableFuture.supplyAsync(() -> orderService.placeOrder(orderRequest));
 //    }
 
-        public String placeOrder(@RequestBody OrderRequest orderRequest){
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public String placeOrder(@RequestBody OrderRequest orderRequest) {
         log.info("Placing Order");
         return orderService.placeOrder(orderRequest);
     }
 
-    public CompletableFuture<String> fallbackMethod(OrderRequest orderRequest, RuntimeException runtimeException){
+    public CompletableFuture<String> fallbackMethod(OrderRequest orderRequest, RuntimeException runtimeException) {
         log.info("Cannot Place Order Executing Fallback logic");
-        return CompletableFuture.supplyAsync(()->"Oops! Something went wrong, please order after some time!");
+        return CompletableFuture.supplyAsync(() -> "Oops! Something went wrong, please order after some time!");
     }
-
 }
